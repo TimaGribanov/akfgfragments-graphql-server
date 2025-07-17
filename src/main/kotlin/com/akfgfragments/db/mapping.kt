@@ -13,14 +13,15 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 object ReleaseTable : IntIdTable("Release") {
     val band = varchar("band", 50)
     val type = varchar("type", 20)
-    val titleJapanese = varchar("titleJapanese", 100).nullable()
-    val titleRomaji = varchar("titleRomaji", 100).nullable()
-    val titleEnglish = varchar("titleEnglish", 100).nullable()
-    val titleGerman = varchar("titleGerman", 100).nullable()
-    val titleIndonesian = varchar("titleIndonesian", 100).nullable()
-    val titleRussian = varchar("titleRussian", 100).nullable()
-    val titleUkrainian = varchar("titleUkrainian", 100).nullable()
-    val titleBelarusian = varchar("titleBelarusian", 100).nullable()
+    val titleJapanese = text("titleJapanese").nullable()
+    val titleRomaji = text("titleRomaji").nullable()
+    val titleEnglish = text("titleEnglish").nullable()
+    val titleGerman = text("titleGerman").nullable()
+    val titleIndonesian = text("titleIndonesian").nullable()
+    val titleRussian = text("titleRussian").nullable()
+    val titleUkrainian = text("titleUkrainian").nullable()
+    val titleBelarusian = text("titleBelarusian").nullable()
+    val titleItalian = text("titleItalian").nullable()
     val coverUri = varchar("coverUri", 100).nullable()
     val spotify = varchar("spotify", 100).nullable()
     val appleMusic = varchar("appleMusic", 100).nullable()
@@ -42,6 +43,7 @@ class ReleaseDAO(id: EntityID<Int>) : IntEntity(id) {
     var titleRussian by ReleaseTable.titleRussian
     var titleUkrainian by ReleaseTable.titleUkrainian
     var titleBelarusian by ReleaseTable.titleBelarusian
+    var titleItalian by ReleaseTable.titleItalian
     var coverUri by ReleaseTable.coverUri
     var spotify by ReleaseTable.spotify
     var appleMusic by ReleaseTable.appleMusic
@@ -52,14 +54,15 @@ class ReleaseDAO(id: EntityID<Int>) : IntEntity(id) {
 
 object SongTable : IntIdTable("Song") {
     val band = varchar("band", 50)
-    val titleJapanese = varchar("titleJapanese", 100).nullable()
-    val titleRomaji = varchar("titleRomaji", 100).nullable()
-    val titleEnglish = varchar("titleEnglish", 100).nullable()
-    val titleGerman = varchar("titleGerman", 100).nullable()
-    val titleIndonesian = varchar("titleIndonesian", 100).nullable()
-    val titleRussian = varchar("titleRussian", 100).nullable()
-    val titleUkrainian = varchar("titleUkrainian", 100).nullable()
-    val titleBelarusian = varchar("titleBelarusian", 100).nullable()
+    val titleJapanese = text("titleJapanese").nullable()
+    val titleRomaji = text("titleRomaji").nullable()
+    val titleEnglish = text("titleEnglish").nullable()
+    val titleGerman = text("titleGerman").nullable()
+    val titleIndonesian = text("titleIndonesian").nullable()
+    val titleRussian = text("titleRussian").nullable()
+    val titleUkrainian = text("titleUkrainian").nullable()
+    val titleBelarusian = text("titleBelarusian").nullable()
+    val titleItalian = text("titleItalian").nullable()
     val spotify = varchar("spotify", 100).nullable()
     val appleMusic = varchar("appleMusic", 100).nullable()
     val amazonMusic = varchar("amazonMusic", 100).nullable()
@@ -79,6 +82,7 @@ class SongDAO(id: EntityID<Int>) : IntEntity(id) {
     var titleRussian by SongTable.titleRussian
     var titleUkrainian by SongTable.titleUkrainian
     var titleBelarusian by SongTable.titleBelarusian
+    var titleItalian by SongTable.titleItalian
     var spotify by SongTable.spotify
     var appleMusic by SongTable.appleMusic
     var amazonMusic by SongTable.amazonMusic
@@ -100,6 +104,7 @@ fun daoToModel(dao: ReleaseDAO) = Release(
     dao.titleRussian,
     dao.titleUkrainian,
     dao.titleBelarusian,
+    dao.titleItalian,
     dao.coverUri,
     dao.spotify,
     dao.appleMusic,
@@ -118,6 +123,7 @@ fun daoToModel(dao: SongDAO) = Song(
     dao.titleRussian,
     dao.titleUkrainian,
     dao.titleBelarusian,
+    dao.titleItalian,
     dao.spotify,
     dao.appleMusic,
     dao.amazonMusic,

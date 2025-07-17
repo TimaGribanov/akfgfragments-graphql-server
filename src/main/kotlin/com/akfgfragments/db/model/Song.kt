@@ -13,6 +13,7 @@ data class Song(
     val titleRussian: String?,
     val titleUkrainian: String?,
     val titleBelarusian: String?,
+    val titleItalian: String?,
     val spotify: String?,
     val appleMusic: String?,
     val amazonMusic: String?,

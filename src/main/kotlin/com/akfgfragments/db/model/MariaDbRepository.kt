@@ -23,7 +23,7 @@ class MariaDbRepository : Repository {
     override suspend fun addRelease(release: Release): Unit = suspendTransaction {
         ReleaseDAO.new {
             band = release.band
-            type = release.type.toString()
+            type = release.type
             titleJapanese = release.titleJapanese
             titleRomaji = release.titleRomaji
             titleEnglish = release.titleEnglish
@@ -32,6 +32,7 @@ class MariaDbRepository : Repository {
             titleRussian = release.titleRussian
             titleUkrainian = release.titleUkrainian
             titleBelarusian = release.titleBelarusian
+            titleItalian = release.titleItalian
             coverUri = release.coverUri
             spotify = release.spotify
             appleMusic = release.appleMusic

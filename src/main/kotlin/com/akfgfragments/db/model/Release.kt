@@ -30,6 +30,7 @@ data class Release(
     val titleRussian: String?,
     val titleUkrainian: String?,
     val titleBelarusian: String?,
+    val titleItalian: String?,
     val coverUri: String?,
     val spotify: String?,
     val appleMusic: String?,
