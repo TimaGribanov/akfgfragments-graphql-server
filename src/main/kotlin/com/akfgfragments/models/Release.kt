@@ -1,6 +1,7 @@
-package com.akfgfragments.db.model
+package com.akfgfragments.models
 
-import kotlinx.serialization.Serializable
+import com.akfgfragments.db.model.MariaDbRepository
+import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 
 //type in DB = ordinal + 1
 enum class ReleaseType(val value: String) {
@@ -13,13 +14,14 @@ enum class ReleaseType(val value: String) {
     OTHER("other");
 
     companion object {
-        private val map = ReleaseType.entries.associateBy(ReleaseType::value)
+        private val map = entries.associateBy(ReleaseType::value)
         infix fun from(entry: String) : ReleaseType = map[entry]!!
     }
 }
 
-@Serializable
+@GraphQLDescription("A model to describe the Release entity")
 data class Release(
+    val id: Int,
     val band: String,
     val type: String,
     val titleJapanese: String?,
@@ -37,7 +39,20 @@ data class Release(
     val amazonMusic: String?,
     val deezer: String?,
     val ytMusic: String?
-)
+) {
+    companion object {
+        suspend fun getAll(): List<Release> =
+            MariaDbRepository().allReleases()
+
+        suspend fun getByType(type: String): List<Release> =
+            MariaDbRepository().releasesByType(ReleaseType.from(type))
+
+        suspend fun getByName(name: String): Release =
+            MariaDbRepository().releaseByName(name)
+
+        suspend fun getByBand(band: String): List<Release> =
+            MariaDbRepository().releasesByBand(band)
+    }
+}
 
 //TODO: releases, songs, persons, mvs, lyrics, tabs
-//TODO: modify the model of GraphQL accordingly, or maybe unify them

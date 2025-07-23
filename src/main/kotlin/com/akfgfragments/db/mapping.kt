@@ -1,7 +1,9 @@
 package com.akfgfragments.db
 
-import com.akfgfragments.db.model.Release
-import com.akfgfragments.db.model.Song
+import com.akfgfragments.models.Language
+import com.akfgfragments.models.Lyrics
+import com.akfgfragments.models.Release
+import com.akfgfragments.models.Song
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
@@ -90,10 +92,27 @@ class SongDAO(id: EntityID<Int>) : IntEntity(id) {
     var ytMusic by SongTable.ytMusic
 }
 
+object LyricsTable : IntIdTable("Lyrics") {
+    val band = varchar("band", 50)
+    val songTitle = varchar("song", 100)
+    val lang = varchar("lang", 2)
+    val text = text("text")
+}
+
+class LyricsDAO(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<LyricsDAO>(LyricsTable)
+
+    var band by LyricsTable.band
+    var songTitle by LyricsTable.songTitle
+    var lang by LyricsTable.lang
+    var text by LyricsTable.text
+}
+
 suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
     newSuspendedTransaction(Dispatchers.IO, statement = block)
 
 fun daoToModel(dao: ReleaseDAO) = Release(
+    dao.id.value,
     dao.band,
     dao.type,
     dao.titleJapanese,
@@ -129,4 +148,11 @@ fun daoToModel(dao: SongDAO) = Song(
     dao.amazonMusic,
     dao.deezer,
     dao.ytMusic
+)
+
+fun daoToModel(dao: LyricsDAO) = Lyrics(
+    dao.band,
+    dao.songTitle,
+    Language.from(dao.lang),
+    dao.text
 )

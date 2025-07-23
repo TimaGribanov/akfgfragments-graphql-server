@@ -2,7 +2,6 @@ description = "akfgfragments.com - back-end custom data GraphQL server"
 
 plugins {
     kotlin("jvm") version "2.1.21"
-//    id("com.expediagroup.graphql")
     alias(libs.plugins.ktor)
     alias(libs.plugins.kotlin.plugin.serialization)
 }
@@ -12,7 +11,7 @@ application {
 }
 
 group = "com.akfgfragments"
-version = "1.0-SNAPSHOT"
+version = "0.0.2"
 
 repositories {
     mavenCentral()
@@ -20,6 +19,7 @@ repositories {
 
 dependencies {
     implementation(libs.graphql.kotlin)
+    implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.websockets)
     implementation(libs.ktor.server.cors)

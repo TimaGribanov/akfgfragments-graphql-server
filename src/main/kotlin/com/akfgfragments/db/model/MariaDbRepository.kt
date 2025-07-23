@@ -1,11 +1,20 @@
 package com.akfgfragments.db.model
 
+import com.akfgfragments.db.LyricsDAO
+import com.akfgfragments.db.LyricsTable
 import com.akfgfragments.db.ReleaseDAO
 import com.akfgfragments.db.ReleaseTable
 import com.akfgfragments.db.SongDAO
+import com.akfgfragments.db.SongTable
 import com.akfgfragments.db.daoToModel
 import com.akfgfragments.db.suspendTransaction
+import com.akfgfragments.models.Language
+import com.akfgfragments.models.Lyrics
+import com.akfgfragments.models.Release
+import com.akfgfragments.models.ReleaseType
+import com.akfgfragments.models.Song
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 
 class MariaDbRepository : Repository {
@@ -16,6 +25,18 @@ class MariaDbRepository : Repository {
     override suspend fun releasesByType(type: ReleaseType): List<Release> = suspendTransaction {
         ReleaseDAO
             .find { ReleaseTable.type eq type.value }
+            .map(::daoToModel)
+    }
+
+    override suspend fun releaseByName(name: String): Release = suspendTransaction {
+        ReleaseDAO
+            .find { ReleaseTable.titleRomaji eq name }
+            .map(::daoToModel)[0]
+    }
+
+    override suspend fun releasesByBand(band: String): List<Release> = suspendTransaction {
+        ReleaseDAO
+            .find { ReleaseTable.band eq band }
             .map(::daoToModel)
     }
 
@@ -54,11 +75,29 @@ class MariaDbRepository : Repository {
         SongDAO.all().map(::daoToModel)
     }
 
+    override suspend fun songByName(name: String): Song = suspendTransaction {
+        SongDAO
+            .find { SongTable.titleRomaji eq name }
+            .map(::daoToModel)[0]
+    }
+
+    override suspend fun songsByBand(band: String): List<Song> = suspendTransaction {
+        SongDAO
+            .find { SongTable.band eq band }
+            .map(::daoToModel)
+    }
+
     override suspend fun addSong(song: Song) {
         TODO("Not yet implemented")
     }
 
     override suspend fun removeSong(id: Int): Boolean {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun getLyrics(songTitle: String, lang: Language): Lyrics = suspendTransaction {
+        LyricsDAO
+            .find { (LyricsTable.songTitle eq songTitle).and (LyricsTable.lang eq lang.code) }
+            .map(::daoToModel)[0]
     }
 }

@@ -1,18 +1,22 @@
 package com.akfgfragments.schema
 
-import com.akfgfragments.schema.dataloaders.ReleaseDataLoader
-import com.akfgfragments.schema.models.Release
-import com.expediagroup.graphql.generator.annotations.GraphQLDescription
-import com.expediagroup.graphql.server.extensions.getValuesFromDataLoader
+import com.akfgfragments.models.Release
 import com.expediagroup.graphql.server.operations.Query
-import graphql.schema.DataFetchingEnvironment
-import java.util.concurrent.CompletableFuture
 
-//class ReleaseQueryService : Query {
-//    @GraphQLDescription("Return a list of releases based on ReleaseSearchParams")
-//    fun searchReleases(params: ReleaseSearchParams, dfe: DataFetchingEnvironment): CompletableFuture<Release> {
-//        dfe.getValuesFromDataLoader(ReleaseDataLoader.dataLoaderName, params.ids)
-//    }
-//}
+class ReleaseQueryService : Query {
+    @Suppress("unused")
+    suspend fun getAllReleases(): List<Release> =
+        Release.getAll()
 
-data class ReleaseSearchParams(val ids: List<Int>)
+    @Suppress("unused")
+    suspend fun getReleasesByType(type: String): List<Release> =
+        Release.getByType(type)
+
+    @Suppress("unused")
+    suspend fun getReleaseByName(name: String): Release =
+        Release.getByName(name)
+
+    @Suppress("unused")
+    suspend fun getReleasesByBand(band: String): List<Release> =
+        Release.getByBand(band)
+}
