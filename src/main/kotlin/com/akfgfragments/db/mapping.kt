@@ -4,6 +4,7 @@ import com.akfgfragments.models.Language
 import com.akfgfragments.models.Lyrics
 import com.akfgfragments.models.Release
 import com.akfgfragments.models.Song
+import com.akfgfragments.models.Tracklist
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
@@ -108,6 +109,18 @@ class LyricsDAO(id: EntityID<Int>) : IntEntity(id) {
     var text by LyricsTable.text
 }
 
+object TracklistTable : IntIdTable("Tracklist") {
+    val release = varchar("release", 100)
+    val tracklist = text("tracklist")
+}
+
+class TracklistDAO(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<TracklistDAO>(TracklistTable)
+
+    var release by TracklistTable.release
+    var tracklist by TracklistTable.tracklist
+}
+
 suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
     newSuspendedTransaction(Dispatchers.IO, statement = block)
 
@@ -155,4 +168,9 @@ fun daoToModel(dao: LyricsDAO) = Lyrics(
     dao.songTitle,
     Language.from(dao.lang),
     dao.text
+)
+
+fun daoToModel(dao: TracklistDAO) = Tracklist(
+    dao.release,
+    dao.tracklist.split(";")
 )

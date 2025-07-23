@@ -5,6 +5,7 @@ import com.akfgfragments.models.Lyrics
 import com.akfgfragments.models.Release
 import com.akfgfragments.models.ReleaseType
 import com.akfgfragments.models.Song
+import com.akfgfragments.models.Tracklist
 
 interface Repository {
     suspend fun allReleases(): List<Release>
@@ -21,4 +22,6 @@ interface Repository {
     suspend fun removeSong(id: Int): Boolean
 
     suspend fun getLyrics(songTitle: String, lang: Language): Lyrics
+
+    suspend fun getTracklist(release: String): Tracklist
 }

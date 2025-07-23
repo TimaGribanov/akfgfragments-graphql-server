@@ -6,6 +6,8 @@ import com.akfgfragments.db.ReleaseDAO
 import com.akfgfragments.db.ReleaseTable
 import com.akfgfragments.db.SongDAO
 import com.akfgfragments.db.SongTable
+import com.akfgfragments.db.TracklistDAO
+import com.akfgfragments.db.TracklistTable
 import com.akfgfragments.db.daoToModel
 import com.akfgfragments.db.suspendTransaction
 import com.akfgfragments.models.Language
@@ -13,6 +15,7 @@ import com.akfgfragments.models.Lyrics
 import com.akfgfragments.models.Release
 import com.akfgfragments.models.ReleaseType
 import com.akfgfragments.models.Song
+import com.akfgfragments.models.Tracklist
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
@@ -98,6 +101,12 @@ class MariaDbRepository : Repository {
     override suspend fun getLyrics(songTitle: String, lang: Language): Lyrics = suspendTransaction {
         LyricsDAO
             .find { (LyricsTable.songTitle eq songTitle).and (LyricsTable.lang eq lang.code) }
+            .map(::daoToModel)[0]
+    }
+
+    override suspend fun getTracklist(release: String): Tracklist = suspendTransaction {
+        TracklistDAO
+            .find { TracklistTable.release eq release }
             .map(::daoToModel)[0]
     }
 }

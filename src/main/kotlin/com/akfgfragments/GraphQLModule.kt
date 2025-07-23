@@ -3,6 +3,7 @@ package com.akfgfragments
 import com.akfgfragments.schema.LyricsQueryService
 import com.akfgfragments.schema.ReleaseQueryService
 import com.akfgfragments.schema.SongQueryService
+import com.akfgfragments.schema.TracklistQueryService
 import com.expediagroup.graphql.server.ktor.GraphQL
 import com.expediagroup.graphql.server.ktor.graphQLPostRoute
 import com.expediagroup.graphql.server.ktor.graphQLSDLRoute
@@ -29,7 +30,8 @@ fun Application.graphQLModule() {
             queries = listOf(
                 ReleaseQueryService(),
                 SongQueryService(),
-                LyricsQueryService()
+                LyricsQueryService(),
+                TracklistQueryService()
             )
 //            mutations = listOf(
 //                LoginMutationService()
