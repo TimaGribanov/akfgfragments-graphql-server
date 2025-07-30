@@ -4,6 +4,7 @@ import com.akfgfragments.models.Language
 import com.akfgfragments.models.Lyrics
 import com.akfgfragments.models.Release
 import com.akfgfragments.models.Song
+import com.akfgfragments.models.SourceType
 import com.akfgfragments.models.Tracklist
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.dao.IntEntity
@@ -98,6 +99,8 @@ object LyricsTable : IntIdTable("Lyrics") {
     val songTitle = varchar("song", 100)
     val lang = varchar("lang", 2)
     val text = text("text")
+    val sourceType = varchar("sourceType", 10)
+    val sourceName = varchar("source", 100)
 }
 
 class LyricsDAO(id: EntityID<Int>) : IntEntity(id) {
@@ -107,6 +110,8 @@ class LyricsDAO(id: EntityID<Int>) : IntEntity(id) {
     var songTitle by LyricsTable.songTitle
     var lang by LyricsTable.lang
     var text by LyricsTable.text
+    var sourceType by LyricsTable.sourceType
+    var sourceName by LyricsTable.sourceName
 }
 
 object TracklistTable : IntIdTable("Tracklist") {
@@ -167,7 +172,9 @@ fun daoToModel(dao: LyricsDAO) = Lyrics(
     dao.band,
     dao.songTitle,
     Language.from(dao.lang),
-    dao.text
+    dao.text,
+    SourceType.valueOf(dao.sourceType),
+    dao.sourceName
 )
 
 fun daoToModel(dao: TracklistDAO) = Tracklist(

@@ -23,12 +23,19 @@ enum class Language(val code: String) {
     }
 }
 
+enum class SourceType() {
+    OFFICIAL,
+    FAN
+}
+
 @GraphQLDescription("A model to describe the Lyrics entity")
 data class Lyrics(
     val band: String,
     val songTitle: String,
     val lang: Language,
-    val text: String
+    val text: String,
+    val sourceType: SourceType,
+    val source: String
 ) {
     companion object {
         suspend fun getLyrics(songTitle: String, lang: Language) =
