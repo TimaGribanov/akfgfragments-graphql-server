@@ -15,7 +15,6 @@ import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import kotlin.time.Duration.Companion.seconds
 
-@Suppress("unused")
 fun Application.graphQLModule() {
     install(WebSockets) {
         pingPeriod = 1.seconds
@@ -33,6 +32,7 @@ fun Application.graphQLModule() {
                 LyricsQueryService(),
                 TracklistQueryService()
             )
+            typeHierarchy = mapOf()
 //            mutations = listOf(
 //                LoginMutationService()
 //            )

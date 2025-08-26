@@ -1,0 +1,8 @@
+ktor:
+  deployment:
+    port: 8080
+mariadb:
+  driverClassName: "org.mariadb.jdbc.Driver"
+  url: "jdbc:mariadb://<host>:<port>/<schema>"
+  user: "<user>"
+  password: "<password>"

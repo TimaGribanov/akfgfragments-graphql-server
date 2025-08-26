@@ -35,7 +35,7 @@ object ReleaseTable : IntIdTable("Release") {
 }
 
 class ReleaseDAO(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<ReleaseDAO>(ReleaseTable)
+    companion object : IntEntityClass<ReleaseDAO>(ReleaseTable, entityCtor = { ReleaseDAO(it) })
 
     var band by ReleaseTable.band
     var type by ReleaseTable.type
@@ -75,7 +75,7 @@ object SongTable : IntIdTable("Song") {
 }
 
 class SongDAO(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<SongDAO>(SongTable)
+    companion object : IntEntityClass<SongDAO>(SongTable, entityCtor = { SongDAO(it) })
 
     var band by SongTable.band
     var titleJapanese by SongTable.titleJapanese
@@ -104,7 +104,7 @@ object LyricsTable : IntIdTable("Lyrics") {
 }
 
 class LyricsDAO(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<LyricsDAO>(LyricsTable)
+    companion object : IntEntityClass<LyricsDAO>(LyricsTable, entityCtor = { LyricsDAO(it) })
 
     var band by LyricsTable.band
     var songTitle by LyricsTable.songTitle
@@ -120,7 +120,8 @@ object TracklistTable : IntIdTable("Tracklist") {
 }
 
 class TracklistDAO(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<TracklistDAO>(TracklistTable)
+    //entiryCtor is needed here to fix problem with native with graalvm: https://github.com/JetBrains/Exposed/issues/1274#issuecomment-2018356868
+    companion object : IntEntityClass<TracklistDAO>(TracklistTable, entityCtor = { TracklistDAO(it) })
 
     var release by TracklistTable.release
     var tracklist by TracklistTable.tracklist

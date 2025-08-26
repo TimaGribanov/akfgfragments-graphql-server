@@ -1,12 +1,10 @@
-//dependencyResolutionManagement {
-//    versionCatalogs {
-//        create("libs") {
-//            from(files("../gradle/libs.versions.toml"))
-//
-//            // examples specific libs
-//            library("ktor-client-jvm-logging", "io.ktor", "ktor-client-logging-jvm").versionRef("ktor")
-//        }
-//    }
-//}
+pluginManagement {
+    plugins {
+        kotlin("jvm") version "2.2.0"
+    }
+}
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
+}
 
 rootProject.name = "data-graphql-server"
