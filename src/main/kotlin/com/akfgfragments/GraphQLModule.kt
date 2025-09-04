@@ -22,6 +22,7 @@ fun Application.graphQLModule() {
     }
     install(CORS) {
         anyHost()
+        allowHeader("content-type")
     }
     install(GraphQL) {
         schema {
