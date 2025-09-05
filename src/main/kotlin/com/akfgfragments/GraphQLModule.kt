@@ -4,6 +4,9 @@ import com.akfgfragments.schema.LyricsQueryService
 import com.akfgfragments.schema.ReleaseQueryService
 import com.akfgfragments.schema.SongQueryService
 import com.akfgfragments.schema.TracklistQueryService
+import com.expediagroup.graphql.generator.annotations.GraphQLDescription
+import com.expediagroup.graphql.generator.federation.directives.ContactDirective
+import com.expediagroup.graphql.server.Schema
 import com.expediagroup.graphql.server.ktor.GraphQL
 import com.expediagroup.graphql.server.ktor.graphQLPostRoute
 import com.expediagroup.graphql.server.ktor.graphQLSDLRoute
@@ -14,6 +17,13 @@ import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import kotlin.time.Duration.Companion.seconds
+
+@ContactDirective(
+    name = "akfgfragments.com",
+    url = "https://github.com/TimaGribanov/akfgfragments-graphql-server"
+)
+@GraphQLDescription("akfgfragments GraphQL schema description")
+class AkfgfragmentsSchema : Schema
 
 fun Application.graphQLModule() {
     install(WebSockets) {
@@ -40,6 +50,7 @@ fun Application.graphQLModule() {
 //            subscriptions = listOf(
 //                ExampleSubscriptionService()
 //            )
+            schemaObject = AkfgfragmentsSchema()
         }
     }
     routing {

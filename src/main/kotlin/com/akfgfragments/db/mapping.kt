@@ -3,6 +3,7 @@ package com.akfgfragments.db
 import com.akfgfragments.models.Language
 import com.akfgfragments.models.Lyrics
 import com.akfgfragments.models.Release
+import com.akfgfragments.models.ReleaseVariant
 import com.akfgfragments.models.Song
 import com.akfgfragments.models.SourceType
 import com.akfgfragments.models.Tracklist
@@ -12,6 +13,7 @@ import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.Transaction
+import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 object ReleaseTable : IntIdTable("Release") {
@@ -54,6 +56,26 @@ class ReleaseDAO(id: EntityID<Int>) : IntEntity(id) {
     var amazonMusic by ReleaseTable.amazonMusic
     var deezer by ReleaseTable.deezer
     var ytMusic by ReleaseTable.ytMusic
+}
+
+object ReleaseVariantTable : IntIdTable("ReleasesVariants") {
+    val masterReleaseId = integer("masterReleaseId")
+    val coverUri = varchar("coverUri", 100).nullable()
+    val format = varchar("format", 20)
+    val releaseDate = datetime("releaseDate")
+    val catalogueNumber = varchar("catalogueNumber", 50)
+    val comment = varchar("comment", 100).nullable()
+}
+
+class ReleaseVariantDAO(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<ReleaseVariantDAO>(ReleaseVariantTable, entityCtor = { ReleaseVariantDAO(it) })
+
+    var masterReleaseId by ReleaseVariantTable.masterReleaseId
+    var coverUri by ReleaseVariantTable.coverUri
+    val format by ReleaseVariantTable.format
+    var releaseDate by ReleaseVariantTable.releaseDate
+    var catalogueNumber by ReleaseVariantTable.catalogueNumber
+    var comment by ReleaseVariantTable.comment
 }
 
 object SongTable : IntIdTable("Song") {
@@ -149,6 +171,16 @@ fun daoToModel(dao: ReleaseDAO) = Release(
     dao.amazonMusic,
     dao.deezer,
     dao.ytMusic
+)
+
+fun daoToModel(dao: ReleaseVariantDAO) = ReleaseVariant(
+    dao.id.value,
+    dao.masterReleaseId,
+    dao.coverUri,
+    dao.format,
+    dao.releaseDate.toString().split("T")[0],
+    dao.catalogueNumber,
+    dao.comment
 )
 
 fun daoToModel(dao: SongDAO) = Song(

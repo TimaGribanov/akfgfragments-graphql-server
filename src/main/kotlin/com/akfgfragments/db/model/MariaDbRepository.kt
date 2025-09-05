@@ -4,6 +4,8 @@ import com.akfgfragments.db.LyricsDAO
 import com.akfgfragments.db.LyricsTable
 import com.akfgfragments.db.ReleaseDAO
 import com.akfgfragments.db.ReleaseTable
+import com.akfgfragments.db.ReleaseVariantDAO
+import com.akfgfragments.db.ReleaseVariantTable
 import com.akfgfragments.db.SongDAO
 import com.akfgfragments.db.SongTable
 import com.akfgfragments.db.TracklistDAO
@@ -14,6 +16,7 @@ import com.akfgfragments.models.Language
 import com.akfgfragments.models.Lyrics
 import com.akfgfragments.models.Release
 import com.akfgfragments.models.ReleaseType
+import com.akfgfragments.models.ReleaseVariant
 import com.akfgfragments.models.Song
 import com.akfgfragments.models.Tracklist
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -43,35 +46,63 @@ class MariaDbRepository : Repository {
             .map(::daoToModel)
     }
 
-    //TODO: not finished
-    override suspend fun addRelease(release: Release): Unit = suspendTransaction {
-        ReleaseDAO.new {
-            band = release.band
-            type = release.type
-            titleJapanese = release.titleJapanese
-            titleRomaji = release.titleRomaji
-            titleEnglish = release.titleEnglish
-            titleGerman = release.titleGerman
-            titleIndonesian = release.titleIndonesian
-            titleRussian = release.titleRussian
-            titleUkrainian = release.titleUkrainian
-            titleBelarusian = release.titleBelarusian
-            titleItalian = release.titleItalian
-            coverUri = release.coverUri
-            spotify = release.spotify
-            appleMusic = release.appleMusic
-            amazonMusic = release.amazonMusic
-            deezer = release.deezer
-            ytMusic = release.ytMusic
-        }
-    }
+//    //TODO: not finished
+//    override suspend fun addRelease(release: Release): Unit = suspendTransaction {
+//        ReleaseDAO.new {
+//            band = release.band
+//            type = release.type
+//            titleJapanese = release.titleJapanese
+//            titleRomaji = release.titleRomaji
+//            titleEnglish = release.titleEnglish
+//            titleGerman = release.titleGerman
+//            titleIndonesian = release.titleIndonesian
+//            titleRussian = release.titleRussian
+//            titleUkrainian = release.titleUkrainian
+//            titleBelarusian = release.titleBelarusian
+//            titleItalian = release.titleItalian
+//            coverUri = release.coverUri
+//            spotify = release.spotify
+//            appleMusic = release.appleMusic
+//            amazonMusic = release.amazonMusic
+//            deezer = release.deezer
+//            ytMusic = release.ytMusic
+//        }
+//    }
+//
+//    override suspend fun editRelease(id: Int, newRelease: Release): Unit = suspendTransaction {
+//        ReleaseDAO.findByIdAndUpdate(id) {
+//            it.band = newRelease.band
+//            it.type = newRelease.type
+//            it.titleJapanese = newRelease.titleJapanese
+//            it.titleRomaji = newRelease.titleRomaji
+//            it.titleEnglish = newRelease.titleEnglish
+//            it.titleGerman = newRelease.titleGerman
+//            it.titleIndonesian = newRelease.titleIndonesian
+//            it.titleRussian = newRelease.titleRussian
+//            it.titleUkrainian = newRelease.titleUkrainian
+//            it.titleBelarusian = newRelease.titleBelarusian
+//            it.titleItalian = newRelease.titleItalian
+//            it.coverUri = newRelease.coverUri
+//            it.spotify = newRelease.spotify
+//            it.appleMusic = newRelease.appleMusic
+//            it.amazonMusic = newRelease.amazonMusic
+//            it.deezer = newRelease.deezer
+//            it.ytMusic = newRelease.ytMusic
+//        }
+//    }
+//
+//    //TODO: not finished
+//    override suspend fun removeRelease(id: Int): Boolean = suspendTransaction {
+//        val rowsDeleted = ReleaseTable.deleteWhere {
+//            ReleaseTable.id eq id
+//        }
+//        rowsDeleted == 1
+//    }
 
-    //TODO: not finished
-    override suspend fun removeRelease(id: Int): Boolean = suspendTransaction {
-        val rowsDeleted = ReleaseTable.deleteWhere {
-            ReleaseTable.id eq id
-        }
-        rowsDeleted == 1
+    override suspend fun getReleaseVariants(masterReleaseId: Int): List<ReleaseVariant> = suspendTransaction {
+        ReleaseVariantDAO
+            .find{ ReleaseVariantTable.masterReleaseId eq masterReleaseId }
+            .map(::daoToModel)
     }
 
     override suspend fun allSongs(): List<Song> = suspendTransaction {

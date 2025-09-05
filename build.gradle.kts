@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.akfgfragments"
-version = "0.0.4"
+version = "0.0.5"
 
 repositories {
     mavenCentral()
@@ -31,6 +31,7 @@ dependencies {
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
     implementation(libs.exposed.dao)
+    implementation(libs.exposed.java.time)
     implementation(libs.h2)
     implementation(libs.mariadb.client)
 //    testImplementation(libs.ktor.server.test.host)
