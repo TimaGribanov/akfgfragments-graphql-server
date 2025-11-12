@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.akfgfragments"
-version = "0.0.5"
+version = "0.0.6"
 
 repositories {
     mavenCentral()
@@ -47,7 +47,7 @@ dependencies {
 //}
 
 tasks.withType<KotlinCompile> {
-    compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_22)
 }
 
 application {

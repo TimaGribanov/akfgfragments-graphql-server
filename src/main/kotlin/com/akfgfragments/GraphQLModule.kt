@@ -1,6 +1,9 @@
 package com.akfgfragments
 
+import com.akfgfragments.schema.LinktreeQueryService
 import com.akfgfragments.schema.LyricsQueryService
+import com.akfgfragments.schema.MusicVideoQueryService
+import com.akfgfragments.schema.PersonQueryService
 import com.akfgfragments.schema.ReleaseQueryService
 import com.akfgfragments.schema.SongQueryService
 import com.akfgfragments.schema.TracklistQueryService
@@ -41,7 +44,10 @@ fun Application.graphQLModule() {
                 ReleaseQueryService(),
                 SongQueryService(),
                 LyricsQueryService(),
-                TracklistQueryService()
+                TracklistQueryService(),
+                PersonQueryService(),
+                MusicVideoQueryService(),
+                LinktreeQueryService()
             )
             typeHierarchy = mapOf()
 //            mutations = listOf(

@@ -54,5 +54,3 @@ data class Release(
             MariaDbRepository().releasesByBand(band)
     }
 }
-
-//TODO: releases, songs, persons, mvs, lyrics, tabs

@@ -1,7 +1,7 @@
 package com.akfgfragments.schema
 
 import com.akfgfragments.models.Release
-import com.akfgfragments.models.ReleaseVariant
+import com.akfgfragments.models.ReleaseVariants
 import com.expediagroup.graphql.server.operations.Query
 
 class ReleaseQueryService : Query {
@@ -22,6 +22,6 @@ class ReleaseQueryService : Query {
         Release.getByBand(band)
 
     @Suppress("unused")
-    suspend fun getReleaseVariants(masterReleaseId: Int): List<ReleaseVariant> =
-        ReleaseVariant.get(masterReleaseId)
+    suspend fun getReleaseVariants(masterReleaseId: Int): List<ReleaseVariants> =
+        ReleaseVariants.get(masterReleaseId)
 }

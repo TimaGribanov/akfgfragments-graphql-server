@@ -2,20 +2,21 @@ package com.akfgfragments.models
 
 import com.akfgfragments.db.model.MariaDbRepository
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
-import java.time.LocalDateTime
 
-@GraphQLDescription("A model to describe the ReleaseVariant entity")
-data class ReleaseVariant(
+@GraphQLDescription("A model to describe the ReleaseVariants entity")
+data class ReleaseVariants(
     val id: Int,
     val masterReleaseId: Int,
+    val masterReleaseTitle: String,
     val coverUri: String?,
     val format: String,
     val releaseDate: String,
     val catalogueNumber: String,
-    val comment: String?
+    val comment: String?,
+    val description: String?
 ) {
     companion object {
-        suspend fun get(masterReleaseId: Int): List<ReleaseVariant> =
+        suspend fun get(masterReleaseId: Int): List<ReleaseVariants> =
             MariaDbRepository().getReleaseVariants(masterReleaseId)
     }
 }
