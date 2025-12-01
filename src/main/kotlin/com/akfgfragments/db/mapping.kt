@@ -11,6 +11,7 @@ import com.akfgfragments.models.ReleaseVariants
 import com.akfgfragments.models.Song
 import com.akfgfragments.models.SourceType
 import com.akfgfragments.models.Tracklist
+import com.akfgfragments.models.TracklistEntry
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
@@ -42,6 +43,7 @@ object ReleaseTable : IntIdTable("Release") {
 }
 
 class ReleaseDAO(id: EntityID<Int>) : IntEntity(id) {
+    //entityCtor is needed here to fix problem with native with graalvm: https://github.com/JetBrains/Exposed/issues/1274#issuecomment-2018356868
     companion object : IntEntityClass<ReleaseDAO>(ReleaseTable, entityCtor = { ReleaseDAO(it) })
 
     var band by ReleaseTable.band
@@ -151,7 +153,6 @@ object TracklistTable : IntIdTable("Tracklist") {
 }
 
 class TracklistDAO(id: EntityID<Int>) : IntEntity(id) {
-    //entityCtor is needed here to fix problem with native with graalvm: https://github.com/JetBrains/Exposed/issues/1274#issuecomment-2018356868
     companion object : IntEntityClass<TracklistDAO>(TracklistTable, entityCtor = { TracklistDAO(it) })
 
     var release by TracklistTable.release
@@ -291,7 +292,7 @@ fun daoToModel(dao: LyricsDAO) = Lyrics(
 
 fun daoToModel(dao: TracklistDAO) = Tracklist(
     dao.release,
-    dao.tracklist.split(";")
+    dao.tracklist.split(";").map{ TracklistEntry(it.split('|')[0], it.split('|')[1]) }
 )
 
 fun daoToModel(dao: PersonDAO) = Person(
