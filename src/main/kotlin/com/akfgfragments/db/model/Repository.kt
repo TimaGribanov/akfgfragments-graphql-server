@@ -1,5 +1,7 @@
 package com.akfgfragments.db.model
 
+import com.akfgfragments.models.CreditedEntryType
+import com.akfgfragments.models.Credits
 import com.akfgfragments.models.Language
 import com.akfgfragments.models.Linktree
 import com.akfgfragments.models.Lyrics
@@ -35,4 +37,6 @@ interface Repository {
 
     suspend fun getAllLinks(): List<Linktree>
     suspend fun getLinktree(id: Int): Linktree
+
+    suspend fun getCredits(type: CreditedEntryType, title: String): Credits
 }

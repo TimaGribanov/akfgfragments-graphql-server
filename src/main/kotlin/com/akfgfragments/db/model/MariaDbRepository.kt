@@ -1,5 +1,7 @@
 package com.akfgfragments.db.model
 
+import com.akfgfragments.db.CreditsDAO
+import com.akfgfragments.db.CreditsTable
 import com.akfgfragments.db.LinktreeDAO
 import com.akfgfragments.db.LinktreeTable
 import com.akfgfragments.db.LyricsDAO
@@ -18,6 +20,8 @@ import com.akfgfragments.db.TracklistDAO
 import com.akfgfragments.db.TracklistTable
 import com.akfgfragments.db.daoToModel
 import com.akfgfragments.db.suspendTransaction
+import com.akfgfragments.models.CreditedEntryType
+import com.akfgfragments.models.Credits
 import com.akfgfragments.models.Language
 import com.akfgfragments.models.Linktree
 import com.akfgfragments.models.Lyrics
@@ -115,6 +119,12 @@ class MariaDbRepository : Repository {
     override suspend fun getLinktree(id: Int): Linktree = suspendTransaction {
         LinktreeDAO
             .find { LinktreeTable.id eq id }
+            .map(::daoToModel)[0]
+    }
+
+    override suspend fun getCredits(type: CreditedEntryType, title: String): Credits = suspendTransaction {
+        CreditsDAO
+            .find { (CreditsTable.relationType eq type.value).and(CreditsTable.releaseOrSong eq title ) }
             .map(::daoToModel)[0]
     }
 }

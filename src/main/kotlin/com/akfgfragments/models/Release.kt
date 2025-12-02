@@ -15,31 +15,31 @@ enum class ReleaseType(val value: String) {
 
     companion object {
         private val map = entries.associateBy(ReleaseType::value)
-        infix fun from(entry: String) : ReleaseType = map[entry]!!
+        infix fun from(entry: String): ReleaseType = map[entry]!!
     }
 }
 
 @GraphQLDescription("A model to describe the Release entity")
 data class Release(
     val id: Int,
-    val band: String,
+    override val band: String,
     val type: String,
-    val titleJapanese: String?,
-    val titleRomaji: String?,
-    val titleEnglish: String?,
-    val titleGerman: String?,
-    val titleIndonesian: String?,
-    val titleRussian: String?,
-    val titleUkrainian: String?,
-    val titleBelarusian: String?,
-    val titleItalian: String?,
+    override val titleJapanese: String?,
+    override val titleRomaji: String?,
+    override val titleEnglish: String?,
+    override val titleGerman: String?,
+    override val titleIndonesian: String?,
+    override val titleRussian: String?,
+    override val titleUkrainian: String?,
+    override val titleBelarusian: String?,
+    override val titleItalian: String?,
     val coverUri: String?,
-    val spotify: String?,
-    val appleMusic: String?,
-    val amazonMusic: String?,
-    val deezer: String?,
-    val ytMusic: String?
-) {
+    override val spotify: String?,
+    override val appleMusic: String?,
+    override val amazonMusic: String?,
+    override val deezer: String?,
+    override val ytMusic: String?
+) : CreditedEntry {
     companion object {
         suspend fun getAll(): List<Release> =
             MariaDbRepository().allReleases()

@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.akfgfragments"
-version = "0.0.6"
+version = "0.0.8"
 
 repositories {
     mavenCentral()

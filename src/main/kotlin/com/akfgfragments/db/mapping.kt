@@ -1,5 +1,8 @@
 package com.akfgfragments.db
 
+import com.akfgfragments.models.CreditedEntry
+import com.akfgfragments.models.Credits
+import com.akfgfragments.models.CreditedEntryType
 import com.akfgfragments.models.Language
 import com.akfgfragments.models.Linktree
 import com.akfgfragments.models.Lyrics
@@ -13,6 +16,7 @@ import com.akfgfragments.models.SourceType
 import com.akfgfragments.models.Tracklist
 import com.akfgfragments.models.TracklistEntry
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -227,6 +231,22 @@ class LinktreeDAO(id: EntityID<Int>) : IntEntity(id) {
     var urlBelarusian by LinktreeTable.urlBelarusian
 }
 
+object CreditsTable : IntIdTable("Credits") {
+    val relationType = varchar("relationType", 7)
+    val releaseOrSong = mediumText("releaseOrSong")
+    val type = varchar("type", 50)
+    val person = varchar("person", 100)
+}
+
+class CreditsDAO(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<CreditsDAO>(CreditsTable, entityCtor = { CreditsDAO(it) })
+
+    var relationType by CreditsTable.relationType
+    var releaseOrSong by CreditsTable.releaseOrSong
+    var type by CreditsTable.type
+    var person by CreditsTable.person
+}
+
 suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
     newSuspendedTransaction(Dispatchers.IO, statement = block)
 
@@ -292,7 +312,7 @@ fun daoToModel(dao: LyricsDAO) = Lyrics(
 
 fun daoToModel(dao: TracklistDAO) = Tracklist(
     dao.release,
-    dao.tracklist.split(";").map{ TracklistEntry(it.split('|')[0], it.split('|')[1]) }
+    dao.tracklist.split(";").map { TracklistEntry(it.split('|')[0], it.split('|')[1]) }
 )
 
 fun daoToModel(dao: PersonDAO) = Person(
@@ -327,4 +347,14 @@ fun daoToModel(dao: LinktreeDAO) = Linktree(
     dao.urlRussian,
     dao.urlUkrainian,
     dao.urlBelarusian
+)
+
+fun daoToModel(dao: CreditsDAO) = Credits(
+    dao.id.value,
+    CreditedEntryType.from(dao.relationType),
+    runBlocking {
+        CreditedEntry.getByTypeAndTitle(CreditedEntryType.from(dao.relationType), dao.releaseOrSong)
+    },
+    dao.type,
+    runBlocking { Person.getByName(dao.person) }
 )
