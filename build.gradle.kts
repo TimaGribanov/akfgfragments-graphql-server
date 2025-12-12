@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.akfgfragments"
-version = "0.0.8"
+version = "0.1.0"
 
 repositories {
     mavenCentral()
@@ -40,12 +40,6 @@ dependencies {
 //    implementation(kotlin("stdlib-jdk8"))
 }
 
-//ktor {
-//    fatJar {
-//        archiveFileName.set("akfgfragments-data-server.jar")
-//    }
-//}
-
 tasks.withType<KotlinCompile> {
     compilerOptions.jvmTarget.set(JvmTarget.JVM_22)
 }
@@ -61,11 +55,10 @@ graalvmNative {
             verbose.set(true)
 
             buildArgs.add("--initialize-at-build-time=io.ktor,kotlin,ch.qos.logback,org.slf4j,kotlinx")
-//            buildArgs.add("--trace-class-initialization=kotlinx.io.SegmentPool,kotlinx.io.files.FileSystemJvmKt,kotlinx.io.files.PathsJvmKt,kotlinx.io.bytestring.ByteString")
             buildArgs.add("-H:ReflectionConfigurationFiles=../../../src/main/resources/META-INF/native-compile/reflection.json")
 
             // options to configure the main binary
-            imageName.set("akfgfragments-data-graphql-server-native-v${version}")
+            imageName.set("akfgfragments-data-graphql-server-v${version}")
         }
         metadataRepository {
             enabled.set(true)
