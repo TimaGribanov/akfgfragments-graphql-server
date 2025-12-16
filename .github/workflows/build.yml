@@ -29,6 +29,10 @@ jobs:
           distribution: 'graalvm'
           github-token: ${{ github.ACTION_TOKEN }}
 
+      - name: Fix wrapper permission
+        run: |
+          chmod +x ./gradlew
+
       - name: Build native image
         run: |
           ./gradlew nativeCompile
