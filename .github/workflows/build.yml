@@ -19,7 +19,7 @@ jobs:
       - name: Read package version
         id: get-version
         run: |
-          version=$(grep -oP "version\s*=\s*'[^']+'" build.gradle | grep -oP "[^']*" | tr -d '\n' | tr -d ' ' | tr -d 'version=')
+          version=$(grep -oP "version\s*=\s*'[^']+'" build.gradle.kts | grep -oP "[^']*" | tr -d '\n' | tr -d ' ' | tr -d 'version=')
           echo "BUILD_VERSION=${version}" >> $GITHUB_ENV
 
       - name: Setup GraalVM
