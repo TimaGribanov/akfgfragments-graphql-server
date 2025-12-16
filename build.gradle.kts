@@ -59,7 +59,7 @@ graalvmNative {
             buildArgs.add("-H:ReflectionConfigurationFiles=../../../src/main/resources/META-INF/native-compile/reflection.json")
 
             // options to configure the main binary
-            imageName.set("akfgfragments-data-graphql-server-v${version}")
+            imageName.set("akfgfragments-data-graphql-server-${version}")
         }
         metadataRepository {
             enabled.set(true)
