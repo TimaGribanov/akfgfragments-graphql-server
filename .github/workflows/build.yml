@@ -20,10 +20,7 @@ jobs:
         id: get-version
         run: |
           version=$(grep -oP "version\s*=\s*'[^']+'" build.gradle | grep -oP "[^']*" | tr -d '\n' | tr -d ' ' | tr -d 'version=')
-          echo "::set-output name=version::${version}"
-#
-#      - name: Setup Gradle
-#        uses: gradle/actions/setup-gradle@v5
+          echo "BUILD_VERSION=${version}" >> $GITHUB_ENV
 
       - name: Setup GraalVM
         uses: graalvm/setup-graalvm@v1
@@ -44,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: 'built-app'
-          path: './build/native/nativeCompile/akfgfragments-data-graphql-server-native-v${{ steps.get-version.outputs.version }}'
+          path: './build/native/nativeCompile/akfgfragments-data-graphql-server-native-v$BUILD_VERSION'
 
   deploy:
     name: Deploy the built app to the server
@@ -71,7 +68,7 @@ jobs:
           host: ${{ secrets.IP }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: ./akfgfragments-data-graphql-server-native-v${{ steps.get-version.outputs.version }}
+          source: ./akfgfragments-data-graphql-server-native-v$BUILD_VERSION
           target: ${{ steps.define-path.outputs.path }}
 
       - name: Change symlink and restart the app
@@ -79,7 +76,7 @@ jobs:
         with:
           command: |
             cd ${{ steps.define-path.outputs.path }}
-            ln -sfn akfgfragments-data-graphql-server-native-v${{ steps.get-version.outputs.version }} data-server
+            ln -sfn akfgfragments-data-graphql-server-native-v$BUILD_VERSION data-server
             systemctl restart data-server
           host: ${{ secrets.IP }}
           username: ${{ secrets.USER }}

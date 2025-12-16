@@ -1,6 +1,6 @@
 [versions]
 kotlin-version = "2.2.21"
-ktor-version = "3.3.2"
+ktor-version = "3.3.3"
 graalvm-version = "0.11.1"
 logback-version = "1.5.20"
 graphql-kotlin-version = "8.5.0"
