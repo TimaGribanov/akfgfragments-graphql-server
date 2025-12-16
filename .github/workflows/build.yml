@@ -1,0 +1,79 @@
+name: Build and deploy GraphQL data server
+
+on:
+  push:
+    branches:
+      - main
+      - test
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Kotlin app with GraalVM
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Read package version
+        id: get-version
+        run: |
+          version=$(grep -oP "version\s*=\s*'[^']+'" build.gradle | grep -oP "[^']*" | tr -d '\n' | tr -d ' ' | tr -d 'version=')
+          echo "::set-output name=version::${version}"
+
+      - name: Setup GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: 22
+          distribution: 'graalvm'
+          github-token: ${{ github.ACTION_TOKEN }}
+
+      - name: Build native image
+        run: |
+          ./gradlew nativeCompile
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: 'built-app'
+          path: './build/native/nativeCompile/akfgfragments-data-graphql-server-native-v${{ steps.get-version.outputs.version }}'
+
+  deploy:
+    name: Deploy the built app to the server
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Define path
+        id: define-path
+        run: |
+          if [ ${{ github.ref }} -eq 'refs/heads/main' ]; then
+            echo "::set-output name=path::${{ secrets.DATA_SERVER_PATH }}"
+          else
+            echo "::set-output name=path::${{ secrets.DATA_SERVER_PATH_TEST }}"
+
+      - name: Download artifact
+        uses: actions/download-artifact@v6
+        with:
+          name: 'built-app'
+
+      - name: Copy to the server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.IP }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: ./akfgfragments-data-graphql-server-native-v${{ steps.get-version.outputs.version }}
+          target: ${{ steps.define-path.outputs.path }}
+
+      - name: Change symlink and restart the app
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: |
+            cd ${{ steps.define-path.outputs.path }}
+            ln -sfn akfgfragments-data-graphql-server-native-v${{ steps.get-version.outputs.version }} data-server
+            systemctl restart data-server
+          host: ${{ secrets.IP }}
+          username: ${{ secrets.USER }}
+          privateKey: ${{ secrets.SSH_KEY }}
