@@ -55,7 +55,7 @@ graalvmNative {
         named("main") {
             verbose.set(true)
 
-            buildArgs.add("--initialize-at-build-time=io.ktor,kotlin,ch.qos.logback,org.slf4j,kotlinx")
+            buildArgs.add("--initialize-at-build-time=io.ktor,kotlin,ch.qos.logback,org.slf4j,kotlinx,org.xml.sax.helpers.LocatorImpl")
             buildArgs.add("-H:ReflectionConfigurationFiles=../../../src/main/resources/META-INF/native-compile/reflection.json")
 
             // options to configure the main binary
