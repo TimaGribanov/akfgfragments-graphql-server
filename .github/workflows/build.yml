@@ -22,6 +22,9 @@ jobs:
           version=$(grep -oP "version\s*=\s*'[^']+'" build.gradle | grep -oP "[^']*" | tr -d '\n' | tr -d ' ' | tr -d 'version=')
           echo "::set-output name=version::${version}"
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+
       - name: Setup GraalVM
         uses: graalvm/setup-graalvm@v1
         with:
