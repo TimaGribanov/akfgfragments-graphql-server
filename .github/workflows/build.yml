@@ -19,7 +19,7 @@ jobs:
       - name: Read package version
         id: get-version
         run: |
-          echo "BUILD_VERSION=$(grep -oP "version\s*=\s*'[^']+'" build.gradle.kts | grep -oP "[^']*" | tr -d '\n' | tr -d ' ' | tr -d 'version=')" >> $GITHUB_ENV
+          echo "BUILD_VERSION=$(grep -oP "version\s*=\s*'[^']+'" build.gradle.kts | grep -oP "[^']*" | tr -d '\n' | tr -d ' ' | tr -d 'version=')" >> "$GITHUB_OUTPUT"
 
       - name: Setup GraalVM
         uses: graalvm/setup-graalvm@v1
@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: 'built-app'
-          path: './build/native/nativeCompile/akfgfragments-data-graphql-server-native-v$BUILD_VERSION'
+          path: './build/native/nativeCompile/akfgfragments-data-graphql-server-native-v${{ steps.get-version.outputs.BUILD_VERSION }}'
 
   deploy:
     name: Deploy the built app to the server
@@ -52,9 +52,9 @@ jobs:
         id: define-path
         run: |
           if [ ${{ github.ref }} -eq 'refs/heads/main' ]; then
-            echo "::set-output name=path::${{ secrets.DATA_SERVER_PATH }}"
+            echo "PATH=${{ secrets.DATA_SERVER_PATH }}" >> "$GITHUB_OUTPUT"
           else
-            echo "::set-output name=path::${{ secrets.DATA_SERVER_PATH_TEST }}"
+            echo "PATH=${{ secrets.DATA_SERVER_PATH_TEST }}" >> "$GITHUB_OUTPUT"
 
       - name: Download artifact
         uses: actions/download-artifact@v6
@@ -67,8 +67,8 @@ jobs:
           host: ${{ secrets.IP }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: ./akfgfragments-data-graphql-server-native-v$BUILD_VERSION
-          target: ${{ steps.define-path.outputs.path }}
+          source: ''./akfgfragments-data-graphql-server-native-v${{ steps.get-version.outputs.BUILD_VERSION }}'
+          target: ${{ steps.define-path.outputs.PATH }}
 
       - name: Change symlink and restart the app
         uses: garygrossgarten/github-action-ssh@release
