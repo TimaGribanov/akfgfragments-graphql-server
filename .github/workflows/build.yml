@@ -70,6 +70,7 @@ jobs:
       - name: Show current files
         run: |
           ls -a
+          echo $FILENAME
 
       - name: Copy to the server
         uses: appleboy/scp-action@v1
@@ -77,7 +78,7 @@ jobs:
           host: ${{ secrets.IP }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: ./built-app.zip
+          source: ${{ env.FILENAME }}
           target: ${{ steps.define-path.outputs.PATH }}
 
       - name: Change symlink and restart the app
@@ -85,8 +86,6 @@ jobs:
         with:
           command: |
             cd ${{ steps.define-path.outputs.path }}
-            unzip -l built-app.zip
-            rm -rf builr-app.zip
             ln -sfn $FILENAME data-server
             systemctl restart data-server
           host: ${{ secrets.IP }}
