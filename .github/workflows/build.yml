@@ -38,7 +38,9 @@ jobs:
 
       - name: Get the filename
         run: |
-          echo "FILENAME=$(ls ./build/native/nativeCompile | grep akfgfragments-data-grphql-server)" >> $GITHUB_ENV
+          ls -a
+          ls ./build/native/nativeCompile | grep akfgfragments-data-graphql-server
+          echo "FILENAME=$(ls ./build/native/nativeCompile | grep akfgfragments-data-graphql-server)" >> $GITHUB_ENV
 
       - name: Upload artifact
         uses: actions/upload-artifact@v5
