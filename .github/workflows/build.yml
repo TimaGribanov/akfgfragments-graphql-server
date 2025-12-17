@@ -16,10 +16,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Read package version
-        id: get-version
-        run: |
-          echo "BUILD_VERSION=$(grep -oP "version\s*=\s*'[^']+'" build.gradle.kts | grep -oP "[^']*" | tr -d '\n' | tr -d ' ' | tr -d 'version=')" >> "$GITHUB_OUTPUT"
+#      - name: Read package version
+#        id: get-version
+#        run: |
+#          echo "BUILD_VERSION=$(grep -oP "version\s*=\s*'[^']+'" build.gradle.kts | grep -oP "[^']*" | tr -d '\n' | tr -d ' ' | tr -d 'version=')" >> "$GITHUB_OUTPUT"
 
       - name: Setup GraalVM
         uses: graalvm/setup-graalvm@v1
@@ -36,12 +36,16 @@ jobs:
         run: |
           ./gradlew nativeCompile
 
+      - name: Get the filename
+        run: |
+          echo "FILENAME=$(ls ./build/native/nativeCompile | grep akfgfragments-data-grphql-server)" >> $GITHUB_ENV
+
       - name: Upload artifact
         uses: actions/upload-artifact@v5
         with:
           name: 'built-app'
-          path: ./build/native/nativeCompile/akfgfragments-data-graphql-server-native-${{ steps.get-version.outputs.BUILD_VERSION }}
-          if-no-files-found: fail
+          path: ${{ env.FILENAME }}
+          if-no-files-found: error
 
   deploy:
     name: Deploy the built app to the server
@@ -68,7 +72,7 @@ jobs:
           host: ${{ secrets.IP }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: ./akfgfragments-data-graphql-server-native-${{ steps.get-version.outputs.BUILD_VERSION }}
+          source: ${{ env.FILENAME }}
           target: ${{ steps.define-path.outputs.PATH }}
 
       - name: Change symlink and restart the app
@@ -76,7 +80,7 @@ jobs:
         with:
           command: |
             cd ${{ steps.define-path.outputs.path }}
-            ln -sfn akfgfragments-data-graphql-server-native-${{ steps.get-version.outputs.BUILD_VERSION }} data-server
+            ln -sfn $FILENAME data-server
             systemctl restart data-server
           host: ${{ secrets.IP }}
           username: ${{ secrets.USER }}
