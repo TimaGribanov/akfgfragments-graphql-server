@@ -38,15 +38,13 @@ jobs:
 
       - name: Get the filename
         run: |
-          ls -a
-          ls ./build/native/nativeCompile | grep akfgfragments-data-graphql-server
-          echo "FILENAME=$(ls ./build/native/nativeCompile | grep akfgfragments-data-graphql-server)" >> $GITHUB_ENV
+          echo "FILENAME=$(ls build/native/nativeCompile | grep akfgfragments-data-graphql-server)" >> $GITHUB_ENV
 
       - name: Upload artifact
         uses: actions/upload-artifact@v5
         with:
           name: 'built-app'
-          path: ${{ env.FILENAME }}
+          path: build/native/nativeCompile/${{ env.FILENAME }}
           if-no-files-found: error
 
   deploy:
