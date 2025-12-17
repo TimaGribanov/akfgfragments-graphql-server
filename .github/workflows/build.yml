@@ -67,8 +67,12 @@ jobs:
         with:
           name: built-app
 
+      - name: Show current files
+        run: |
+          ls -a
+
       - name: Copy to the server
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.IP }}
           username: ${{ secrets.USER }}
