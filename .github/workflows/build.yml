@@ -79,7 +79,7 @@ jobs:
           host: ${{ secrets.IP }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: ${{ steps.get-filename.outputs.FILENAME }}
+          source: .
           target: ${{ steps.define-path.outputs.PATH }}
 
       - name: Change symlink and restart the app
