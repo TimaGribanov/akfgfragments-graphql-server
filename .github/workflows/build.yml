@@ -56,7 +56,7 @@ jobs:
       - name: Define path
         id: define-path
         run: |
-          if [ ${{ github.ref }} -eq 'refs/heads/main' ]; then
+          if [ ${{ github.ref }} == 'refs/heads/main' ]; then
             echo "PATH=${{ secrets.DATA_SERVER_PATH }}" >> "$GITHUB_OUTPUT"
           else
             echo "PATH=${{ secrets.DATA_SERVER_PATH_TEST }}" >> "$GITHUB_OUTPUT"
