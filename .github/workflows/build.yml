@@ -41,7 +41,7 @@ jobs:
           echo "FILENAME=$(ls build/native/nativeCompile | grep akfgfragments-data-graphql-server)" >> $GITHUB_ENV
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: 'built-app'
           path: build/native/nativeCompile/${{ env.FILENAME }}
@@ -63,9 +63,9 @@ jobs:
           fi
 
       - name: Download artifact
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
-          name: 'built-app'
+          name: built-app
 
       - name: Copy to the server
         uses: appleboy/scp-action@v0.1.7
@@ -73,7 +73,7 @@ jobs:
           host: ${{ secrets.IP }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: ${{ env.FILENAME }}
+          source: ./built-app.zip
           target: ${{ steps.define-path.outputs.PATH }}
 
       - name: Change symlink and restart the app
@@ -81,6 +81,8 @@ jobs:
         with:
           command: |
             cd ${{ steps.define-path.outputs.path }}
+            unzip -l built-app.zip
+            rm -rf builr-app.zip
             ln -sfn $FILENAME data-server
             systemctl restart data-server
           host: ${{ secrets.IP }}
