@@ -6,7 +6,7 @@ import io.ktor.server.cio.CIO
 import io.ktor.server.config.ApplicationConfig
 import io.ktor.server.engine.embeddedServer
 
-val config = ApplicationConfig("application.yaml")
+val config = ApplicationConfig("./resources/application.yaml")
 val port : Int = config.property("ktor.deployment.port").getString().toInt()
 
 fun main() {
