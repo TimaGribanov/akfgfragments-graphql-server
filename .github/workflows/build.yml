@@ -89,8 +89,9 @@ jobs:
           FILENAME: ${{ steps.get-filename.outputs.FILENAME }}
         with:
           command: |
-            cd $PATH
-            ln -sfn $FILENAME data-server
+            cd ${PATH}
+            chmod +x ${FILENAME}
+            ln -sfn ${FILENAME} data-server
             systemctl restart data-server
           host: ${{ secrets.IP }}
           username: ${{ secrets.USER }}
