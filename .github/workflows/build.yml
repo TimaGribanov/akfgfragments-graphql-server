@@ -89,10 +89,10 @@ jobs:
           FILENAME: ${{ steps.get-filename.outputs.FILENAME }}
         with:
           command: |
-            cd ${PATH}
-            chmod +x ${FILENAME}
-            ln -sfn ${FILENAME} data-server
-            systemctl restart data-server
+            cd $PATH
+            chmod +x $FILENAME
+            ln -sfn $FILENAME data-server
+            ./restart.sh
           host: ${{ secrets.IP }}
           username: ${{ secrets.USER }}
           privateKey: ${{ secrets.SSH_KEY }}
