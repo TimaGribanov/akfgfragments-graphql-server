@@ -1,0 +1,10 @@
+{
+  "resources": [
+    {
+      "glob": ".\\*.yaml"
+    },
+    {
+      "glob": ".\\logback.xml"
+    }
+  ]
+}
