@@ -20,13 +20,16 @@ repositories {
 
 dependencies {
     implementation(libs.graphql.kotlin)
+
+    implementation(libs.ktor.server.config.yaml)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.cio)
     implementation(libs.ktor.server.websockets)
     implementation(libs.ktor.server.cors)
-    implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.server.statuspages)
-    implementation(libs.ktor.server.config.yaml)
+
+    implementation(libs.ktor.serialization.kotlinx.json)
+
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
     implementation(libs.exposed.dao)
@@ -44,6 +47,10 @@ project.tasks.withType<UsesKotlinJavaToolchain>().configureEach {
         languageVersion.set(JavaLanguageVersion.of(25))
     })
 }
+//
+//kotlin {
+//    jvmToolchain(22)
+//}
 
 application {
     mainClass.set("io.ktor.server.cio.EngineMain")
