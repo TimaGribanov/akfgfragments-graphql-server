@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.akfgfragments"
-version = "0.1.5"
+version = "0.1.6"
 
 repositories {
     mavenCentral()
@@ -63,8 +63,7 @@ graalvmNative {
             verbose.set(true)
 
             buildArgs.add("--initialize-at-build-time=io.ktor,kotlin,ch.qos.logback,org.slf4j,kotlinx,org.xml.sax.helpers")
-//            buildArgs.add("-H:ReflectionConfigurationFiles=../../../src/main/resources/META-INF/native-compile/reflection.json")
-//            buildArgs.add("-H:ResourceConfigurationFiles=${projectDir}/src/main/resources/META-INF/native-compile/reachability-metadata.json")
+            buildArgs.add("-H:ReflectionConfigurationFiles=../../../src/main/resources/META-INF/native-compile/reflection.json")
 
             // options to configure the main binary
             imageName.set("akfgfragments-data-graphql-server-${version}")
