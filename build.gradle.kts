@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.akfgfragments"
-version = "0.1.4"
+version = "0.1.5"
 
 repositories {
     mavenCentral()
@@ -47,13 +47,13 @@ project.tasks.withType<UsesKotlinJavaToolchain>().configureEach {
         languageVersion.set(JavaLanguageVersion.of(25))
     })
 }
-//
+
 //kotlin {
 //    jvmToolchain(22)
 //}
 
 application {
-    mainClass.set("com.akfgfragments.ApplicationKt")
+    mainClass.set("io.ktor.server.cio.EngineMain")
 }
 
 graalvmNative {
@@ -63,8 +63,8 @@ graalvmNative {
             verbose.set(true)
 
             buildArgs.add("--initialize-at-build-time=io.ktor,kotlin,ch.qos.logback,org.slf4j,kotlinx,org.xml.sax.helpers")
-            buildArgs.add("-H:ReflectionConfigurationFiles=../../../src/main/resources/META-INF/native-compile/reflection.json")
-            buildArgs.add("-H:ResourceConfigurationFiles=${projectDir}/src/main/resources/META-INF/native-compile/reachability-metadata.json")
+//            buildArgs.add("-H:ReflectionConfigurationFiles=../../../src/main/resources/META-INF/native-compile/reflection.json")
+//            buildArgs.add("-H:ResourceConfigurationFiles=${projectDir}/src/main/resources/META-INF/native-compile/reachability-metadata.json")
 
             // options to configure the main binary
             imageName.set("akfgfragments-data-graphql-server-${version}")
