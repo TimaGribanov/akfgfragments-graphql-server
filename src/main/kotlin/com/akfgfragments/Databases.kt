@@ -1,8 +1,9 @@
 package com.akfgfragments
 
+import io.ktor.server.config.ApplicationConfig
 import org.jetbrains.exposed.sql.Database
 
-fun configureDatabases() {
+fun configureDatabases(config: ApplicationConfig) {
     val url = config.property("mariadb.url").getString()
     val user = config.property("mariadb.user").getString()
     val password = config.property("mariadb.password").getString()

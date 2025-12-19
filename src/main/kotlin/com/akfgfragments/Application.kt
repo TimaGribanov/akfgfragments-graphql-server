@@ -8,7 +8,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.cio.EngineMain.main(args)
 fun Application.module() {
 //    log.info("The app is running on port: {}", port)
 
-    configureDatabases()
+    configureDatabases(environment.config)
     configureRouting()
     graphQLModule()
 }
