@@ -12,6 +12,9 @@ jobs:
     name: Build Kotlin app with GraalVM
     runs-on: ubuntu-latest
 
+    outputs:
+      filename: ${{ steps.get-filename.outputs.FILENAME }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -71,7 +74,7 @@ jobs:
       - name: Show current files
         run: |
           ls -a
-          echo ${{ steps.get-filename.outputs.FILENAME }}
+          echo ${{ needs.build.outputs.filename }}
 
       - name: Copy to the server
         uses: appleboy/scp-action@v1
@@ -86,7 +89,7 @@ jobs:
         uses: garygrossgarten/github-action-ssh@release
         env:
           PATH: ${{ steps.define-path.outputs.PATH }}
-          FILENAME: ${{ steps.get-filename.outputs.FILENAME }}
+          FILENAME: ${{ needs.build.outputs.filename }}
         with:
           command: |
             cd $PATH

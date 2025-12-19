@@ -1,6 +1,9 @@
 ktor:
   deployment:
     port: 8080
+  application:
+    modules:
+      - com.akfgfragments.ApplicationKt.module
 mariadb:
   driverClassName: "org.mariadb.jdbc.Driver"
   url: "jdbc:mariadb://<host>:<port>/<schema>"

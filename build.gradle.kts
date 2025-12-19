@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "com.akfgfragments"
-version = "0.1.3"
+version = "0.1.4"
 
 repositories {
     mavenCentral()
@@ -46,7 +46,7 @@ project.tasks.withType<UsesKotlinJavaToolchain>().configureEach {
 }
 
 application {
-    mainClass.set("com.akfgfragments.ApplicationKt")
+    mainClass.set("io.ktor.server.cio.EngineMain")
 }
 
 graalvmNative {

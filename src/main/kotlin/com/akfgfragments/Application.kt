@@ -1,21 +1,12 @@
 package com.akfgfragments
 
 import io.ktor.server.application.Application
-import io.ktor.server.application.log
-import io.ktor.server.cio.CIO
-import io.ktor.server.config.ApplicationConfig
-import io.ktor.server.engine.embeddedServer
 
-val config = ApplicationConfig("./resources/application.yaml")
-val port : Int = config.property("ktor.deployment.port").getString().toInt()
-
-fun main() {
-    embeddedServer(CIO, port = port, module = Application::module).start(wait = true)
-}
+fun main(args: Array<String>): Unit = io.ktor.server.cio.EngineMain.main(args)
 
 @Suppress("unused")
 fun Application.module() {
-    log.info("The app is running on port: {}", port)
+//    log.info("The app is running on port: {}", port)
 
     configureDatabases()
     configureRouting()
