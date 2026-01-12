@@ -27,13 +27,26 @@ jobs:
       - name: Setup GraalVM
         uses: graalvm/setup-graalvm@v1
         with:
-          java-version: 24
+          java-version: 25
           distribution: 'graalvm'
           github-token: ${{ github.ACTION_TOKEN }}
 
       - name: Fix wrapper permission
         run: |
           chmod +x ./gradlew
+
+      - name: Build fatJar
+        run: |
+          buildFatJar
+
+      - name: Get fatJar's filename
+        id: get-fatjar-filename
+        run: |
+          echo "FATJAR_FILENAME=$(ls build/libs | grep akfgfragments-data-graphql-server-fatJar)" >> $GITHUB_OUTPUT
+
+      - name: Create reflection with the tracing agent
+        run: |
+          $JAVA_HOME/bin/java -agentlib:native-image-agent=config-output-dir=src/main/resources/META-INF/native-image/com.akfgfragments -jar build/libs/${{ steps.get-fatjar-filename.outputs.FATJAR_FILENAME }}
 
       - name: Build native image
         run: |
