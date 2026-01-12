@@ -35,6 +35,10 @@ jobs:
         run: |
           chmod +x ./gradlew
 
+      - name: Copy dummy config to be used at build time
+        run: |
+          cp main/resources/config-example.yaml main/resources/application.yaml
+
       - name: Build fatJar
         run: |
           ./gradlew :buildFatJar
