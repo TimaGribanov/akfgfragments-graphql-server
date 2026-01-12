@@ -95,7 +95,7 @@ jobs:
           PATH: ${{ steps.define-path.outputs.PATH }}
           FILENAME: ${{ needs.build.outputs.filename }}
         with:
-          command: cd ${{ env.PATH }}; chmod +x ${{ env.$FILENAME }}; ln -sfn ${{ env.$FILENAME }} data-server; ./restart.sh
+          command: cd ${{ env.PATH }}; chmod +x ${{ env.FILENAME }}; ln -sfn ${{ env.FILENAME }} data-server; ./restart.sh
           host: ${{ secrets.IP }}
           username: ${{ secrets.USER }}
           privateKey: ${{ secrets.SSH_KEY }}
