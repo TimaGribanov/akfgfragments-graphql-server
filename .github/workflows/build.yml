@@ -37,7 +37,7 @@ jobs:
 
       - name: Build fatJar
         run: |
-          buildFatJar
+          ./gradlew :buildFatJar
 
       - name: Get fatJar's filename
         id: get-fatjar-filename
