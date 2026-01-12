@@ -39,19 +39,6 @@ jobs:
         run: |
           cp src/main/resources/config-example.yaml src/main/resources/application.yaml
 
-      - name: Build fatJar
-        run: |
-          ./gradlew :buildFatJar
-
-      - name: Get fatJar's filename
-        id: get-fatjar-filename
-        run: |
-          echo "FATJAR_FILENAME=$(ls build/libs | grep akfgfragments-data-graphql-server-fatJar)" >> $GITHUB_OUTPUT
-
-      - name: Create reflection with the tracing agent
-        run: |
-          $JAVA_HOME/bin/java -agentlib:native-image-agent=config-output-dir=src/main/resources/META-INF/native-image/com.akfgfragments -jar build/libs/${{ steps.get-fatjar-filename.outputs.FATJAR_FILENAME }}
-
       - name: Build native image
         run: |
           ./gradlew nativeCompile
