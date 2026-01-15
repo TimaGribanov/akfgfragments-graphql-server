@@ -7,21 +7,21 @@ import com.expediagroup.graphql.server.operations.Query
 class ReleaseQueryService : Query {
     @Suppress("unused")
     suspend fun getAllReleases(): List<Release> =
-        Release.getAll()
+        Release.getAllReleases()
 
     @Suppress("unused")
     suspend fun getReleasesByType(type: String): List<Release> =
-        Release.getByType(type)
+        Release.getReleasesByType(type)
 
     @Suppress("unused")
     suspend fun getReleaseByName(name: String): Release =
-        Release.getByName(name)
+        Release.getReleaseByName(name)
 
     @Suppress("unused")
     suspend fun getReleasesByBand(band: String): List<Release> =
-        Release.getByBand(band)
+        Release.getReleasesByBand(band)
 
     @Suppress("unused")
     suspend fun getReleaseVariants(masterReleaseId: Int): List<ReleaseVariants> =
-        ReleaseVariants.get(masterReleaseId)
+        ReleaseVariants.getReleaseVariants(masterReleaseId)
 }

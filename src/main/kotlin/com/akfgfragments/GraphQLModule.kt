@@ -62,6 +62,7 @@ fun Application.graphQLModule() {
         }
     }
     routing {
+//        graphQLGetRoute()
         graphQLPostRoute()
 //        graphQLSubscriptionsRoute()
         graphiQLRoute()

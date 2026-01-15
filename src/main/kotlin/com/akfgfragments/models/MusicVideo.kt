@@ -24,10 +24,10 @@ data class MusicVideo(
     val type: MusicVideoType
 ) {
     companion object {
-        suspend fun getAll(): List<MusicVideo> =
+        suspend fun getAllMusicVideos(): List<MusicVideo> =
             MariaDbRepository().getAllMusicVideos()
 
-        suspend fun getByTitle(title: String): MusicVideo =
+        suspend fun getMusicVideoByTitle(title: String): MusicVideo =
             MariaDbRepository().getMusicVideoByTitle(title)
     }
 }

@@ -6,9 +6,9 @@ import com.expediagroup.graphql.server.operations.Query
 class MusicVideoQueryService : Query {
     @Suppress("unused")
     suspend fun getAllMusicVideos(): List<MusicVideo> =
-        MusicVideo.getAll()
+        MusicVideo.getAllMusicVideos()
 
     @Suppress("unused")
     suspend fun getMusicVideoByTitle(title: String): MusicVideo =
-        MusicVideo.getByTitle(title)
+        MusicVideo.getMusicVideoByTitle(title)
 }

@@ -41,16 +41,16 @@ data class Release(
     override val ytMusic: String?
 ) : CreditedEntry {
     companion object {
-        suspend fun getAll(): List<Release> =
+        suspend fun getAllReleases(): List<Release> =
             MariaDbRepository().allReleases()
 
-        suspend fun getByType(type: String): List<Release> =
+        suspend fun getReleasesByType(type: String): List<Release> =
             MariaDbRepository().releasesByType(ReleaseType.from(type))
 
-        suspend fun getByName(name: String): Release =
+        suspend fun getReleaseByName(name: String): Release =
             MariaDbRepository().releaseByName(name)
 
-        suspend fun getByBand(band: String): List<Release> =
+        suspend fun getReleasesByBand(band: String): List<Release> =
             MariaDbRepository().releasesByBand(band)
     }
 }

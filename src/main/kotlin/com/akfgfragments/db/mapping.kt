@@ -356,5 +356,5 @@ fun daoToModel(dao: CreditsDAO) = Credits(
         CreditedEntry.getByTypeAndTitle(CreditedEntryType.from(dao.relationType), dao.releaseOrSong)
     },
     dao.type,
-    runBlocking { Person.getByName(dao.person) }
+    runBlocking { Person.getPersonByName(dao.person) }
 )

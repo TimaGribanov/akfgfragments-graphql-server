@@ -2,6 +2,7 @@ package com.akfgfragments.schema
 
 import com.akfgfragments.models.Language
 import com.akfgfragments.models.Lyrics
+import com.expediagroup.graphql.generator.annotations.GraphQLName
 import com.expediagroup.graphql.server.operations.Query
 
 class LyricsQueryService : Query {

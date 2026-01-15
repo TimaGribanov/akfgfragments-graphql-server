@@ -13,10 +13,10 @@ data class Person(
     val nameBelarusian: String?
 ) {
     companion object {
-        suspend fun getAll(): List<Person> =
+        suspend fun getAllPeople(): List<Person> =
             MariaDbRepository().getAllPeople()
 
-        suspend fun getByName(name: String): Person =
+        suspend fun getPersonByName(name: String): Person =
             MariaDbRepository().getPerson(name)
     }
 }

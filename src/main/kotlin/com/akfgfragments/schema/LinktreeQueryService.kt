@@ -6,9 +6,9 @@ import com.expediagroup.graphql.server.operations.Query
 class LinktreeQueryService : Query {
     @Suppress("unused")
     suspend fun getAllLinks(): List<Linktree> =
-        Linktree.getAll()
+        Linktree.getAllLinktrees()
 
     @Suppress("unused")
     suspend fun getLinktree(id: Int): Linktree =
-        Linktree.getById(id)
+        Linktree.getLinktreeById(id)
 }

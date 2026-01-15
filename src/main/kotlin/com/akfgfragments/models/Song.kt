@@ -22,13 +22,13 @@ data class Song(
     override val ytMusic: String?,
 ): CreditedEntry {
     companion object {
-        suspend fun getAll(): List<Song> =
+        suspend fun getAllSongs(): List<Song> =
             MariaDbRepository().allSongs()
 
-        suspend fun getByName(name: String): Song =
+        suspend fun getSongByName(name: String): Song =
             MariaDbRepository().songByName(name)
 
-        suspend fun getByBand(band: String): List<Song> =
+        suspend fun getSongsByBand(band: String): List<Song> =
             MariaDbRepository().songsByBand(band)
     }
 }

@@ -30,9 +30,9 @@ interface CreditedEntry {
     companion object {
         suspend fun getByTypeAndTitle(type: CreditedEntryType, title: String): CreditedEntry {
             return if (type == CreditedEntryType.RELEASE)
-                Release.getByName(title)
+                Release.getReleaseByName(title)
             else
-                Song.getByName(title)
+                Song.getSongByName(title)
         }
     }
 }

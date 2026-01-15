@@ -16,7 +16,7 @@ data class ReleaseVariants(
     val description: String?
 ) {
     companion object {
-        suspend fun get(masterReleaseId: Int): List<ReleaseVariants> =
+        suspend fun getReleaseVariants(masterReleaseId: Int): List<ReleaseVariants> =
             MariaDbRepository().getReleaseVariants(masterReleaseId)
     }
 }

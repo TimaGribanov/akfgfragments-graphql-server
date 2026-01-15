@@ -19,10 +19,10 @@ data class Linktree(
     val urlBelarusian: String?
 ) {
     companion object {
-        suspend fun getAll(): List<Linktree> =
+        suspend fun getAllLinktrees(): List<Linktree> =
             MariaDbRepository().getAllLinks()
 
-        suspend fun getById(id: Int): Linktree =
+        suspend fun getLinktreeById(id: Int): Linktree =
             MariaDbRepository().getLinktree(id)
     }
 }

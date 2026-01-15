@@ -6,13 +6,13 @@ import com.expediagroup.graphql.server.operations.Query
 class SongQueryService : Query {
     @Suppress("unused")
     suspend fun getAllSongs(): List<Song> =
-        Song.getAll()
+        Song.getAllSongs()
 
     @Suppress("unused")
     suspend fun getSongByName(name: String): Song =
-        Song.getByName(name)
+        Song.getSongByName(name)
 
     @Suppress("unused")
     suspend fun getSongsByBand(band: String): List<Song> =
-        Song.getByBand(band)
+        Song.getSongsByBand(band)
 }
