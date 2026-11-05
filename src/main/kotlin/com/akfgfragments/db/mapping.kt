@@ -247,9 +247,6 @@ class CreditsDAO(id: EntityID<Int>) : IntEntity(id) {
     var person by CreditsTable.person
 }
 
-suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
-    newSuspendedTransaction(Dispatchers.IO, statement = block)
-
 fun daoToModel(dao: ReleaseDAO) = Release(
     dao.id.value,
     dao.band,
