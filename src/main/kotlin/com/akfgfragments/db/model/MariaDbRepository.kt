@@ -1,40 +1,11 @@
 package com.akfgfragments.db.model
 
-import com.akfgfragments.db.CreditsDAO
-import com.akfgfragments.db.CreditsTable
-import com.akfgfragments.db.LinktreeDAO
-import com.akfgfragments.db.LinktreeTable
-import com.akfgfragments.db.LyricsDAO
-import com.akfgfragments.db.LyricsTable
-import com.akfgfragments.db.MusicVideoDAO
-import com.akfgfragments.db.MusicVideoTable
-import com.akfgfragments.db.PersonDAO
-import com.akfgfragments.db.PersonTable
-import com.akfgfragments.db.ReleaseDAO
-import com.akfgfragments.db.ReleaseTable
-import com.akfgfragments.db.ReleaseVariantsDAO
-import com.akfgfragments.db.ReleaseVariantsTable
-import com.akfgfragments.db.SongDAO
-import com.akfgfragments.db.SongTable
-import com.akfgfragments.db.TracklistDAO
-import com.akfgfragments.db.TracklistTable
-import com.akfgfragments.db.daoToModel
-import com.akfgfragments.db.suspendTransaction
-import com.akfgfragments.models.CreditedEntryType
-import com.akfgfragments.models.Credits
-import com.akfgfragments.models.Language
-import com.akfgfragments.models.Linktree
-import com.akfgfragments.models.Lyrics
-import com.akfgfragments.models.MusicVideo
-import com.akfgfragments.models.Person
-import com.akfgfragments.models.Release
-import com.akfgfragments.models.ReleaseType
-import com.akfgfragments.models.ReleaseVariants
-import com.akfgfragments.models.Song
-import com.akfgfragments.models.Tracklist
-import org.jetbrains.exposed.v1.core.eq
+import com.akfgfragments.db.*
+import com.akfgfragments.models.*
 import org.jetbrains.exposed.v1.core.and
+import org.jetbrains.exposed.v1.core.eq
 import org.jetbrains.exposed.v1.core.or
+import org.jetbrains.exposed.v1.jdbc.transactions.suspendTransaction
 
 class MariaDbRepository : Repository {
     override suspend fun allReleases(): List<Release> = suspendTransaction {
