@@ -32,8 +32,9 @@ import com.akfgfragments.models.ReleaseType
 import com.akfgfragments.models.ReleaseVariants
 import com.akfgfragments.models.Song
 import com.akfgfragments.models.Tracklist
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.or
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.and
+import org.jetbrains.exposed.v1.core.or
 
 class MariaDbRepository : Repository {
     override suspend fun allReleases(): List<Release> = suspendTransaction {

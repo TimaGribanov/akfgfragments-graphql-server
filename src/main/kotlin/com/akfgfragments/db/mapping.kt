@@ -17,14 +17,14 @@ import com.akfgfragments.models.Tracklist
 import com.akfgfragments.models.TracklistEntry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IntIdTable
-import org.jetbrains.exposed.sql.Transaction
-import org.jetbrains.exposed.sql.javatime.date
-import org.jetbrains.exposed.sql.javatime.timestamp
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.v1.dao.IntEntity
+import org.jetbrains.exposed.v1.dao.IntEntityClass
+import org.jetbrains.exposed.v1.core.dao.id.EntityID
+import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
+import org.jetbrains.exposed.v1.core.Transaction
+import org.jetbrains.exposed.v1.javatime.date
+import org.jetbrains.exposed.v1.javatime.timestamp
+import org.jetbrains.exposed.v1.jdbc.transactions.experimental.newSuspendedTransaction
 
 object ReleaseTable : IntIdTable("Release") {
     val band = varchar("band", 50)

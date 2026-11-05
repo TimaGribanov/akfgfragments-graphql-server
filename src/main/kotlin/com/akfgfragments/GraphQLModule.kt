@@ -15,7 +15,7 @@ import com.expediagroup.graphql.server.ktor.GraphQL
 import com.expediagroup.graphql.server.ktor.graphQLPostRoute
 import com.expediagroup.graphql.server.ktor.graphQLSDLRoute
 import com.expediagroup.graphql.server.ktor.graphiQLRoute
-import io.ktor.serialization.jackson.*
+import io.ktor.serialization.jackson3.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.routing.*
