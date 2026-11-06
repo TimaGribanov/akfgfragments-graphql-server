@@ -239,25 +239,16 @@
       "type": "com.expediagroup.graphql.server.operations.Query"
     },
     {
-      "type": "com.fasterxml.jackson.databind.deser.Deserializers[]"
+      "type": "tools.jackson.databind.deser.Deserializers[]"
     },
     {
-      "type": "com.fasterxml.jackson.databind.deser.KeyDeserializers[]"
+      "type": "tools.jackson.databind.deser.KeyDeserializers[]"
     },
     {
-      "type": "com.fasterxml.jackson.databind.deser.ValueInstantiators[]"
+      "type": "tools.jackson.databind.deser.ValueInstantiators[]"
     },
     {
-      "type": "com.fasterxml.jackson.databind.ext.Java7SupportImpl",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.fasterxml.jackson.databind.ser.Serializers[]"
+      "type": "tools.jackson.databind.ser.Serializers[]"
     },
     {
       "type": "com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl",
@@ -610,7 +601,7 @@
       "type": "kotlinx.coroutines.scheduling.WorkQueue"
     },
     {
-      "type": "org.jetbrains.exposed.jdbc.ExposedConnectionImpl"
+      "type": "org.jetbrains.exposed.v1.jdbc.ExposedConnectionImpl"
     },
     {
       "type": "org.mariadb.jdbc.Driver",
@@ -666,7 +657,7 @@
       "glob": "META-INF/services/kotlin.reflect.jvm.internal.impl.util.ModuleVisibilityHelper"
     },
     {
-      "glob": "META-INF/services/org.jetbrains.exposed.sql.DatabaseConnectionAutoRegistration"
+      "glob": "META-INF/services/org.jetbrains.exposed.v1.jdbc.DatabaseConnectionAutoRegistration"
     },
     {
       "glob": "META-INF/services/org.slf4j.spi.SLF4JServiceProvider"
